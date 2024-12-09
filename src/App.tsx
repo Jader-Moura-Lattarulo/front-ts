@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import { useTheme } from './ThemeContext'
 
 interface TodoItem {
   id: string,
@@ -12,6 +13,7 @@ function App() {
   const keyTaksMemory: string = "tasks"
 
   //States
+  const {theme, toggleTheme} = useTheme()
   const [todos, setTodos] = useState<TodoItem[]>([])
   const [newTodo, setNewTodo] = useState<string>("")
   const [isLoaded, setIsLoaded] = useState<boolean>(false) //Buscar dados da memória 
@@ -68,8 +70,8 @@ function App() {
 
   return (
     <>
-      <div className='app'>
-        <div className='container'>
+      <div className={`app ${theme}`}>
+        <div className={`container ${theme}`}>
           <h1>Lista de Tarefas - {getCompletedTasks().length} / {todos.length}</h1>
           <div className='input-container'>
             <input type="text" value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
@@ -86,8 +88,8 @@ function App() {
               ))
             }
           </ol>
-          <button onClick={console.log}>
-            Alterar Tema
+          <button onClick={toggleTheme}>
+            Alterar para o tema { theme === 'light' ? 'Escuro' : 'Claro'}
           </button>
         </div>
       </div>
